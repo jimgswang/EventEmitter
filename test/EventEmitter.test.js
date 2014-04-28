@@ -79,6 +79,14 @@ describe('EventEmitter tests', function() {
             emitter.emit('data');
         });
 
+        it('should return true if listeners were fired', function() {
+            expect(emitter.emit('data')).to.be.true;
+        });
+
+        it('should return false if no listeners fired', function() {
+            expect(emitter.emit('adf')).to.be.false;
+        });
+
     });
 });
 

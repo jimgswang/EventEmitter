@@ -27,17 +27,27 @@ EventEmitter.prototype.on = function(evt, listener) {
     return this;
 };
 
-EventEmitter.prototype.emit = function(evt) {
+/**
+ * Trigger an event
+ * @param {Mixed} evt - The event to trigger
+ * @param {Mixed} [..var_args] - Optional arguments to pass to listener
+ * @returns {Boolean} - true if evt trigged a listener 
+ */
+EventEmitter.prototype.emit = function(evt /*, var_args */) {
 
     var listeners = this._events[evt],
         args = Array.prototype.slice.call(arguments, 1),
         self = this;
 
-    if(listeners) {
+    if(listeners && listeners.length) {
         listeners.forEach(function(listener) {
             listener.apply(self, args);
         });
+
+        return true;
     }
+
+    return false;
 };
 
 module.exports = EventEmitter;
