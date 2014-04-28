@@ -12,20 +12,33 @@ function EventEmitter() {
 
 /**
  * Register an event that will trigger listener
- * @param {Mixed} eventName - The event to listen for
- * @param {function} listener - The function to call when eventName happens
+ * @param {Mixed} evt - The event to listen for
+ * @param {function} listener - The function to call when evt happens
  * @returns {Object} - Return the emitter
  */
-EventEmitter.prototype.on = function(eventName, listener) {
+EventEmitter.prototype.on = function(evt, listener) {
 
     if(typeof listener !== 'function') {
         throw new TypeError('listener should be a function');
     }
 
-    this._events[eventName] = this._events[eventName] || [];
-    this._events[eventName].push(listener);
+    this._events[evt] = this._events[evt] || [];
+    this._events[evt].push(listener);
     return this;
-}
+};
+
+EventEmitter.prototype.emit = function(evt) {
+
+    var listeners = this._events[evt],
+        args = Array.prototype.slice.call(arguments, 1),
+        self = this;
+
+    if(listeners) {
+        listeners.forEach(function(listener) {
+            listener.apply(self, args);
+        });
+    }
+};
 
 module.exports = EventEmitter;
 
