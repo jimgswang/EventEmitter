@@ -88,5 +88,30 @@ describe('EventEmitter tests', function() {
         });
 
     });
+
+    describe('.removeAllListeners', function() {
+
+        beforeEach(function() {
+            emitter.on('foo', foo);
+            emitter.on('foo', function() {});
+            emitter.on('bar', bar);
+        });
+
+        it('should remove all listeners if no parameter', function() {
+            emitter.removeAllListeners();
+            expect(emitter._events).to.be.empty;
+        });
+
+
+        it('should only remove listeners to specified event', function() {
+            emitter.removeAllListeners('foo');
+            expect(emitter._events.foo).to.be.undefined;
+            expect(emitter._events.bar).to.not.be.undefined;
+        });
+
+        it('should return the emitter', function() {
+            expect(emitter.removeAllListeners()).to.equal(emitter);
+        });
+    });
 });
 

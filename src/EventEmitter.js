@@ -50,6 +50,25 @@ EventEmitter.prototype.emit = function(evt /*, var_args */) {
     return false;
 };
 
+
+/**
+ * Remove all listeners to an event. If no event is specified,
+ * remove all listeners
+ * @param {Mixed} [evt] - The event whose listeners to remove
+ */
+EventEmitter.prototype.removeAllListeners = function(evt) {
+
+    if(evt) {
+        delete this._events[evt];
+    }
+
+    else {
+        this._events = {};
+    }
+    
+    return this;
+};
+
 module.exports = EventEmitter;
 
 
