@@ -137,7 +137,7 @@
         }
 
         wrapper = function wrap() {
-            listener();
+            listener.apply(self, Array.prototype.slice.call(arguments));
             self.removeListener(evt, listener);
         };
 
