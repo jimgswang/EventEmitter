@@ -5,7 +5,7 @@
         // CommonJS
         module.exports = definition();
     } 
-    else if(typeof define === 'object' && define.amd) {
+    else if(typeof define === 'function' && define.amd) {
         // AMD
         define(definition);
     }
