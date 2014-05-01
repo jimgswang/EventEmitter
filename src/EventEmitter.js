@@ -1,6 +1,9 @@
 'use strict';
 
-
+/**
+ * Create an EventEmitter
+ * @constructor
+ */
 function EventEmitter() {
     /**
      * A hash to hold all registered events and their listeners
