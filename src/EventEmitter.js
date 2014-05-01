@@ -140,8 +140,17 @@ EventEmitter.prototype.once = function(evt, listener) {
     return this;
 };
 
+/**
+ * Return an array of listeners for an event
+ * @param {Mixed} evt - The event whose listeners to get
+ * @returns {Array} - An array of listeners for the event
+ *                    Empty array if event isnt registered
+ */
 EventEmitter.prototype.listeners = function(evt) {
 
+    var listeners = this._events[evt];
+
+    return listeners || [];
 };
 
 module.exports = EventEmitter;
