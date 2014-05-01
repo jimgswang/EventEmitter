@@ -140,5 +140,9 @@ EventEmitter.prototype.once = function(evt, listener) {
     return this;
 };
 
+EventEmitter.prototype.listeners = function(evt) {
+
+};
+
 module.exports = EventEmitter;
 

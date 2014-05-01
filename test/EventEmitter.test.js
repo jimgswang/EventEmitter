@@ -182,5 +182,22 @@ describe('EventEmitter tests', function() {
             expect(emitter.once('foo', foo)).to.equal(emitter);
         });
     });
+
+    describe('.listeners', function() {
+
+        beforeEach(function() {
+            emitter.on('foo', foo);
+            emitter.on('bar', bar);
+        });
+
+        it('should return an array of listeners for an event', function() {
+            expect(emitter.listeners('foo')).to.deep.equal([foo]);
+        });
+
+        it('should return an empty array for unregistered events', function() {
+            expect(emitter.listeners('abcd')).to.deep.equal([]);
+        });
+
+    });
 });
 
