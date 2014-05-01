@@ -113,5 +113,31 @@ describe('EventEmitter tests', function() {
             expect(emitter.removeAllListeners()).to.equal(emitter);
         });
     });
+
+    describe('.removeListener', function() {
+
+        var baz;
+
+        beforeEach(function() {
+            baz = sinon.spy();
+
+            emitter.on('foo', foo);
+            emitter.on('foo', baz);
+            emitter.on('bar', bar);
+        });
+
+        it('should remove only one listener for event', function() {
+            emitter.removeListener('foo', baz);
+            expect(emitter._events.foo.length).to.equal(1);
+            expect(emitter._events.foo[0]).to.equal(foo);
+        });
+
+
+        it('should throw error if listener is not a function', function() {
+            var fn = emitter.removeListener.bind(emitter, 'foo', 'foo');
+            expect(fn).to.throw(TypeError);
+        });
+
+    });
 });
 
