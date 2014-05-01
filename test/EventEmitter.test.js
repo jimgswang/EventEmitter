@@ -79,6 +79,108 @@ describe('EventEmitter tests', function() {
             emitter.emit('data');
         });
 
+        it('should return true if listeners were fired', function() {
+            expect(emitter.emit('data')).to.be.true;
+        });
+
+        it('should return false if no listeners fired', function() {
+            expect(emitter.emit('adf')).to.be.false;
+        });
+
+    });
+
+    describe('.removeAllListeners', function() {
+
+        beforeEach(function() {
+            emitter.on('foo', foo);
+            emitter.on('foo', function() {});
+            emitter.on('bar', bar);
+        });
+
+        it('should remove all listeners if no parameter', function() {
+            emitter.removeAllListeners();
+            expect(emitter._events).to.be.empty;
+        });
+
+
+        it('should only remove listeners to specified event', function() {
+            emitter.removeAllListeners('foo');
+            expect(emitter._events.foo).to.be.undefined;
+            expect(emitter._events.bar).to.not.be.undefined;
+        });
+
+        it('should return the emitter', function() {
+            expect(emitter.removeAllListeners()).to.equal(emitter);
+        });
+    });
+
+    describe('.removeListener', function() {
+
+        var baz;
+
+        beforeEach(function() {
+            baz = sinon.spy();
+
+            emitter.on('foo', foo);
+            emitter.on('foo', baz);
+            emitter.on('bar', bar);
+        });
+
+        it('should remove only one listener for event', function() {
+            emitter.removeListener('foo', baz);
+            expect(emitter._events.foo.length).to.equal(1);
+            expect(emitter._events.foo[0]).to.equal(foo);
+        });
+
+
+        it('should throw error if listener is not a function', function() {
+            var fn = emitter.removeListener.bind(emitter, 'foo', 'foo');
+            expect(fn).to.throw(TypeError);
+        });
+
+        it('should return the emitter', function() {
+            expect(emitter.removeListener('foo', foo)).to.equal(emitter);
+        });
+
+        it('should be able to remove listener added by .once', function() {
+            var qux = sinon.spy();
+            emitter.once('bar', qux);
+            emitter.removeListener('bar', qux);
+
+            expect(emitter._events.bar.length).to.equal(1);
+            expect(emitter._events.bar[0]).to.equal(bar);
+        });
+    });
+
+    describe('.once', function() {
+
+        it('should throw error if listener is not a function', function() {
+            var fn = emitter.once.bind(null, 'abc', 'abc');
+            expect(fn).to.throw(TypeError);
+        });
+
+        it('should register a listener', function() {
+            emitter.once('foo', foo);
+            expect(emitter._events.foo.length).to.equal(1);
+        });
+
+        it('should run registered function', function() {
+            emitter.once('foo', foo);
+            emitter.emit('foo');
+
+            expect(foo.calledOnce).to.be.true;
+        });
+
+        it('should remove listener after .emit', function() {
+            emitter.once('foo', foo);
+            emitter.emit('foo');
+
+            expect(emitter._events.foo).to.be.empty;
+        });
+
+        it('should return the emitter', function() {
+            expect(emitter.once('foo', foo)).to.equal(emitter);
+        });
     });
 });
 
