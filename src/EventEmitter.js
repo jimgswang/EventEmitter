@@ -181,5 +181,26 @@
         return listeners || [];
     };
 
+    /**
+     * Return the number of listeners for an event on an emitter
+     * @param {EventEmitter} emitter - the emitter to check
+     * @param {Mixed} evt - The event to check
+     * @returns {Number} - The number of listeners for evt on emitter
+     */
+    EventEmitter.listenerCount = function(emitter, evt) {
+
+        var isEventEmitter = emitter instanceof EventEmitter,
+            listeners;
+
+        if(!isEventEmitter) {
+            return 0;
+        }
+
+        listeners = emitter._events[evt];
+
+        return listeners ? listeners.length
+                         : 0;
+    }
+
     return EventEmitter;
 });

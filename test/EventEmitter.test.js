@@ -223,5 +223,27 @@ describe('EventEmitter tests', function() {
             expect(emitter.off).to.equal(emitter.removeListener);
         });
     });
+
+    describe('EventEmitter.listenerCount', function() {
+
+        beforeEach(function() {
+            emitter.on('foo', foo);
+            emitter.on('foo', function() {});
+            emitter.on('bar', bar);
+        });
+
+        it('should return 0 for non emitters', function() {
+            expect(EventEmitter.listenerCount(1)).to.equal(0);
+        });
+
+        it('should return 0 for no listeners', function() {
+            expect(EventEmitter.listenerCount(emitter, 'baz')).to.equal(0);
+        });
+
+        it('should return number of listeners', function() {
+
+            expect(EventEmitter.listenerCount(emitter, 'foo')).to.equal(2);
+        });
+    });
 });
 
