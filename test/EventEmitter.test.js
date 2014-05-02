@@ -178,9 +178,36 @@ describe('EventEmitter tests', function() {
             expect(emitter._events.foo).to.be.empty;
         });
 
+        it('should pass all parameters from listener', function() {
+            var arg1 = 1,
+                arg2 = '2',
+                arg3 = {};
+
+            emitter.once('foo', foo);
+            emitter.emit('foo', arg1, arg2, arg3);
+            sinon.assert.calledWithExactly(foo, arg1, arg2, arg3);
+        });
+
         it('should return the emitter', function() {
             expect(emitter.once('foo', foo)).to.equal(emitter);
         });
+    });
+
+    describe('.listeners', function() {
+
+        beforeEach(function() {
+            emitter.on('foo', foo);
+            emitter.on('bar', bar);
+        });
+
+        it('should return an array of listeners for an event', function() {
+            expect(emitter.listeners('foo')).to.deep.equal([foo]);
+        });
+
+        it('should return an empty array for unregistered events', function() {
+            expect(emitter.listeners('abcd')).to.deep.equal([]);
+        });
+
     });
 });
 

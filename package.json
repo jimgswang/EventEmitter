@@ -1,4 +1,13 @@
 {
+  "name": "EventEmitter",
+  "description": "Platform agnostic Node style EventEmitters",
+  "version": "0.9.0",
+  "author": "Jim Wang <jim.gs.wang@gmail.com>",
+  "license": "MIT",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/jimgswang/EventEmitter.git"
+  },
   "devDependencies": {
     "chai": "^1.9.1",
     "grunt": "^0.4.4",
