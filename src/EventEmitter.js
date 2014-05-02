@@ -15,6 +15,8 @@
     }
 })(this, 'EventEmitter',  function() {
 
+    var slice = Array.prototype.slice;
+
     /**
      * Create an EventEmitter
      * @constructor
@@ -54,7 +56,7 @@
     EventEmitter.prototype.emit = function(evt /*, var_args */) {
 
         var listeners = this._events[evt],
-            args = Array.prototype.slice.call(arguments, 1),
+            args = slice.call(arguments, 1),
             self = this;
 
         if(listeners && listeners.length) {
@@ -137,7 +139,7 @@
         }
 
         wrapper = function wrap() {
-            listener.apply(self, Array.prototype.slice.call(arguments));
+            listener.apply(self, slice.call(arguments));
             self.removeListener(evt, listener);
         };
 
