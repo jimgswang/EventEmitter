@@ -216,5 +216,12 @@ describe('EventEmitter tests', function() {
             expect(emitter.addListener).to.equal(emitter.on);
         });
     });
+
+    describe('.off', function() {
+
+        it('should alias to .removeListener', function() {
+            expect(emitter.off).to.equal(emitter.removeListener);
+        });
+    });
 });
 

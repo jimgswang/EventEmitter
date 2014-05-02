@@ -129,6 +129,11 @@
     };
 
     /**
+     * Alias .off to .removeListener
+     */
+    EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+
+    /**
      * Register an event listener to be fired once
      * Once the event has triggered, the listener is removed
      * @param {Mixed} evt - The event to listen for
