@@ -45,6 +45,8 @@
 
         this._events[evt] = this._events[evt] || [];
         this._events[evt].push(listener);
+
+        this.emit('newListener', evt, listener);
         return this;
     };
 

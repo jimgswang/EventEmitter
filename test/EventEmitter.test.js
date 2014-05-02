@@ -37,6 +37,16 @@ describe('EventEmitter tests', function() {
         it('should return itself', function() {
             expect(emitter.on('data', foo)).to.equal(emitter);
         });
+
+        it('emits newListener event with event name and listener args', function() {
+            var emitSpy = sinon.spy(emitter, 'emit');
+            
+            emitter.on('foo', foo);
+
+            sinon.assert.calledOnce(emitSpy);
+            sinon.assert.calledWith(emitSpy, 'newListener', 'foo', foo);
+
+        });
     });
 
 
