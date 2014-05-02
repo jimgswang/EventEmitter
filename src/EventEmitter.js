@@ -22,6 +22,7 @@
      * @constructor
      */
     function EventEmitter() {
+
         /**
          * A hash to hold all registered events and their listeners
          * properties are event names, their values are arrays of 
@@ -44,8 +45,15 @@
 
         this._events[evt] = this._events[evt] || [];
         this._events[evt].push(listener);
+
+        this.emit('newListener', evt, listener);
         return this;
     };
+
+    /** 
+     * Alias addListener to on
+     */
+    EventEmitter.prototype.addListener = EventEmitter.prototype.on;
 
     /**
      * Trigger an event
@@ -119,8 +127,14 @@
             });
         }
 
+        this.emit('removeListener', evt, listener);
         return this;
     };
+
+    /**
+     * Alias .off to .removeListener
+     */
+    EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
 
     /**
      * Register an event listener to be fired once
@@ -154,6 +168,8 @@
             'inner': listener
         });
 
+        this.emit('newListener', evt, listener);
+
         return this;
     };
 
@@ -169,6 +185,27 @@
 
         return listeners || [];
     };
+
+    /**
+     * Return the number of listeners for an event on an emitter
+     * @param {EventEmitter} emitter - the emitter to check
+     * @param {Mixed} evt - The event to check
+     * @returns {Number} - The number of listeners for evt on emitter
+     */
+    EventEmitter.listenerCount = function(emitter, evt) {
+
+        var isEventEmitter = emitter instanceof EventEmitter,
+            listeners;
+
+        if(!isEventEmitter) {
+            return 0;
+        }
+
+        listeners = emitter._events[evt];
+
+        return listeners ? listeners.length
+                         : 0;
+    }
 
     return EventEmitter;
 });

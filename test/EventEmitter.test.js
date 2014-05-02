@@ -37,6 +37,16 @@ describe('EventEmitter tests', function() {
         it('should return itself', function() {
             expect(emitter.on('data', foo)).to.equal(emitter);
         });
+
+        it('emits newListener event with event name and listener args', function() {
+            var emitSpy = sinon.spy(emitter, 'emit');
+            
+            emitter.on('foo', foo);
+
+            sinon.assert.calledOnce(emitSpy);
+            sinon.assert.calledWith(emitSpy, 'newListener', 'foo', foo);
+
+        });
     });
 
 
@@ -150,6 +160,14 @@ describe('EventEmitter tests', function() {
             expect(emitter._events.bar.length).to.equal(1);
             expect(emitter._events.bar[0]).to.equal(bar);
         });
+
+        it('should emit removeListener event with event name and listener args', function() {
+            var emitSpy = sinon.spy(emitter, 'emit');
+            emitter.removeListener('foo', foo);
+
+            sinon.assert.calledOnce(emitSpy);
+            sinon.assert.calledWith(emitSpy, 'removeListener', 'foo', foo);
+        });
     });
 
     describe('.once', function() {
@@ -191,6 +209,17 @@ describe('EventEmitter tests', function() {
         it('should return the emitter', function() {
             expect(emitter.once('foo', foo)).to.equal(emitter);
         });
+
+
+        it('emits newListener event with event name and listener args', function() {
+            var emitSpy = sinon.spy(emitter, 'emit');
+            
+            emitter.once('foo', foo);
+
+            sinon.assert.calledOnce(emitSpy);
+            sinon.assert.calledWith(emitSpy, 'newListener', 'foo', foo);
+
+        });
     });
 
     describe('.listeners', function() {
@@ -208,6 +237,42 @@ describe('EventEmitter tests', function() {
             expect(emitter.listeners('abcd')).to.deep.equal([]);
         });
 
+    });
+
+    describe('.addListener', function() {
+
+        it('should be alias to .on', function() {
+            expect(emitter.addListener).to.equal(emitter.on);
+        });
+    });
+
+    describe('.off', function() {
+
+        it('should alias to .removeListener', function() {
+            expect(emitter.off).to.equal(emitter.removeListener);
+        });
+    });
+
+    describe('EventEmitter.listenerCount', function() {
+
+        beforeEach(function() {
+            emitter.on('foo', foo);
+            emitter.on('foo', function() {});
+            emitter.on('bar', bar);
+        });
+
+        it('should return 0 for non emitters', function() {
+            expect(EventEmitter.listenerCount(1)).to.equal(0);
+        });
+
+        it('should return 0 for no listeners', function() {
+            expect(EventEmitter.listenerCount(emitter, 'baz')).to.equal(0);
+        });
+
+        it('should return number of listeners', function() {
+
+            expect(EventEmitter.listenerCount(emitter, 'foo')).to.equal(2);
+        });
     });
 });
 
