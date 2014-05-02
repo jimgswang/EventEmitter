@@ -127,6 +127,7 @@
             });
         }
 
+        this.emit('removeListener', evt, listener);
         return this;
     };
 

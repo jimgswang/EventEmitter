@@ -160,6 +160,14 @@ describe('EventEmitter tests', function() {
             expect(emitter._events.bar.length).to.equal(1);
             expect(emitter._events.bar[0]).to.equal(bar);
         });
+
+        it('should emit removeListener event with event name and listener args', function() {
+            var emitSpy = sinon.spy(emitter, 'emit');
+            emitter.removeListener('foo', foo);
+
+            sinon.assert.calledOnce(emitSpy);
+            sinon.assert.calledWith(emitSpy, 'removeListener', 'foo', foo);
+        });
     });
 
     describe('.once', function() {
