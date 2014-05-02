@@ -1,4 +1,4 @@
-EventEmitter
+EventEmitter [![Build Status](https://travis-ci.org/jimgswang/EventEmitter.svg?branch=master)](https://travis-ci.org/jimgswang/EventEmitter)
 ============
 Platform agnostic Node style EventEmitters. Bringing events to the browser without any other dependencies! Supports AMD, CommonJS and global export
 
