@@ -165,6 +165,8 @@
             'inner': listener
         });
 
+        this.emit('newListener', evt, listener);
+
         return this;
     };
 
