@@ -22,6 +22,7 @@
      * @constructor
      */
     function EventEmitter() {
+
         /**
          * A hash to hold all registered events and their listeners
          * properties are event names, their values are arrays of 
@@ -46,6 +47,11 @@
         this._events[evt].push(listener);
         return this;
     };
+
+    /** 
+     * Alias addListener to on
+     */
+    EventEmitter.prototype.addListener = EventEmitter.prototype.on;
 
     /**
      * Trigger an event

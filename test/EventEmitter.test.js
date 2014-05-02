@@ -209,5 +209,12 @@ describe('EventEmitter tests', function() {
         });
 
     });
+
+    describe('.addListener', function() {
+
+        it('should be alias to .on', function() {
+            expect(emitter.addListener).to.equal(emitter.on);
+        });
+    });
 });
 
