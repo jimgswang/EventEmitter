@@ -9,6 +9,12 @@ Platform agnostic Node style EventEmitters. Bringing events to the browser witho
 
     emitter.emit('evt', {foo: 'bar' });
 
+    var fn = function();
+    emitter.on('evt', fn);
+
+    emitter.removeListener('evt', fn);
+    emitter.removeAllListeners();
+
 Inherit
 --------
 
