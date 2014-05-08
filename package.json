@@ -5,12 +5,13 @@
   "author": "Jim Wang <jim.gs.wang@gmail.com>",
   "license": "MIT",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/jimgswang/EventEmitter.git"
+    "type": "git",
+    "url": "https://github.com/jimgswang/EventEmitter.git"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "grunt": "^0.4.4",
+    "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-mocha-cli": "^1.8.0",
     "mocha": "^1.18.2",
