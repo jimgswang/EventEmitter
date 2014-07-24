@@ -1,6 +1,6 @@
-'use strict';
-
 (function(root, name, definition) {
+    'use strict';
+
     if(typeof module === 'object') {
         // CommonJS
         module.exports = definition();
@@ -13,7 +13,8 @@
         // Global
         root[name] = definition();
     }
-})(this, 'EventEmitter',  function() {
+})(this, 'EventEmitter',  function x () {
+    'use strict';
 
     var slice = Array.prototype.slice;
 
